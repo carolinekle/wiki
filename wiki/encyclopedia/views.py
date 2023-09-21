@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.db.models import Q
 import markdown
 from . import util
 
@@ -26,3 +26,23 @@ def entry_page(request, title):
         "title": title,
         "content": html_content
     })
+
+def search(request):
+    if request.method == "POST":
+        entry_search = request.POST["q"]
+        html_content = convert(entry_search)
+
+        if html_content is not None:
+            return render(request, "encyclopedia/entry.html", {
+                "title":entry_search,
+                "content": html_content
+            })
+        else:
+            all = util.list_entries()
+            rec = []
+            for entry in all:
+                if entry_search.lower() in entry.lower():
+                    rec.append(entry)
+            return render(request, "encyclopedia/search.html",{
+                "rec":rec
+            })
