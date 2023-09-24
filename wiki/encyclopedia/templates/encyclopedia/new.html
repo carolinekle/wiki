@@ -7,14 +7,18 @@
 {% block body %}
     <h1>New Entry</h1>
 
-    <form action="{% url 'new' %}" method="POST">
+    <form action="{% url 'new_submit' %}" method="POST">
         {% csrf_token %}
-        <input class="title" type="text" name="title" placeholder="Title">
+        <lable>Title:</label>
+            <br>
+        <input class="title" type="text" name="title">
+            <br>
+        <label>Content:</label>
+            <br>
+        <textarea class="content" type="text" name="content"> </textarea>
+            <br>
+        <input type="submit" value="Submit">
     </form>
 
-    <form action="{% url 'new' %}" method="POST">
-        {% csrf_token %}
-        <input class="content" type="text" name="content" placeholder="Content">
-    </form>
 
 {% endblock %}
